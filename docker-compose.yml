@@ -16,6 +16,10 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      args:
+        # Pobiera ID z systemu hosta, z fallbackiem do 1000
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     volumes:
       - ./backend:/var/www/html
     depends_on:
@@ -33,12 +37,17 @@ services:
 
   frontend:
     image: node:20-alpine
+    # Zmuszamy kontener Node, by używał Twoich lokalnych uprawnień
+    user: "${UID:-1000}:${GID:-1000}"
     working_dir: /app
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
+      # Cache npm w osobnym wolumenie, aby uniknąć błędów braku uprawnień na głównym systemie plików kontenera
+      - npm-cache:/.npm
     command: sh -c "npm install && npm run dev -- --host"
 
 volumes:
   db-data:
+  npm-cache:
