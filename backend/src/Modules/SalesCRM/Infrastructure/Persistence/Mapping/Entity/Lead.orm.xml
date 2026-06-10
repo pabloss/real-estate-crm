@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Modules\SalesCRM\Domain\Entity\Lead" table="leads">
+        <!-- UUID jest identyfikatorem, ale nie ma autogeneracji przez bazę -->
+        <id name="id" type="uuid" column="id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="fullName" type="string" column="full_name" length="255"/>
+        <field name="phoneNumber" type="string" column="phone_number" length="50"/>
+
+        <!-- Natywna obsługa Enum z PHP 8.1+ w Doctrine -->
+        <field name="status" type="string" column="status" length="30" enum-type="App\Modules\SalesCRM\Domain\Enum\LeadStatus"/>
+
+        <!-- Miękka relacja z modułem Nieruchomości (tylko Uuid, żadnego hard powiązania) -->
+        <field name="interestedInPropertyId" type="uuid" column="interested_in_property_id" nullable="true"/>
+
+        <!-- Wstrzyknięty Value Object -->
+        <embedded name="email" class="App\Modules\SalesCRM\Domain\ValueObject\Email" use-column-prefix="false"/>
+    </entity>
+
+</doctrine-mapping>

@@ -29,6 +29,18 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Modules/PropertyCatalog/Infrastructure/Persistence/Mapping/ValueObject'
                 prefix: 'App\Modules\PropertyCatalog\Domain\ValueObject'
                 alias: PropertyCatalogVO
+            SalesCRMEntity:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Modules/SalesCRM/Infrastructure/Persistence/Mapping/Entity'
+                prefix: 'App\Modules\SalesCRM\Domain\Entity'
+                alias: SalesCRMEntity
+            SalesCRMVO:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Modules/SalesCRM/Infrastructure/Persistence/Mapping/ValueObject'
+                prefix: 'App\Modules\SalesCRM\Domain\ValueObject'
+                alias: SalesCRMVO
 
 when@test:
     doctrine:
