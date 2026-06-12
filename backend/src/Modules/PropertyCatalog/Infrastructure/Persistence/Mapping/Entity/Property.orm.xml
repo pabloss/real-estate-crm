@@ -18,6 +18,7 @@
                 <option name="default">0</option>
             </options>
         </field>
+        <field name="mainPhotoUrl" type="string" length="255" nullable="true"/>
     </entity>
 
 </doctrine-mapping>

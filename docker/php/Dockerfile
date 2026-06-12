@@ -13,11 +13,16 @@ RUN apk add --no-cache shadow \
 RUN apk add --no-cache \
     libpq-dev \
     icu-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
     pdo \
     pdo_pgsql \
     intl \
-    opcache
+    opcache \
+    gd
 
 # Sprawdzanie wymaganych rozszerzeń
 RUN echo "Sprawdzanie wymaganych rozszerzeń..." && \

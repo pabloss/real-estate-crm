@@ -17,6 +17,8 @@ class Property
     private PropertyArea $area;
     private int $interestedLeadsCount;
 
+    private string $mainPhotoUrl;
+
     public function __construct(
         Uuid $id,
         string $title,
@@ -46,6 +48,11 @@ class Property
     public function incrementInterestedLeads(): void
     {
         $this->interestedLeadsCount++;
+    }
+
+    public function setMainPhotoUrl(string $mainPhotoUrl): void
+    {
+        $this->mainPhotoUrl = $mainPhotoUrl;
     }
 
     // Tutaj znajdą się gettery (jeśli są potrzebne) oraz metody zmieniające stan
