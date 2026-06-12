@@ -2,8 +2,9 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    Paper, Typography, CircularProgress, Box, Alert, Button
+    Paper, Typography, CircularProgress, Box, Alert, Button, Badge, Tooltip
 } from '@mui/material';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import AddPropertyDialog from './AddPropertyDialog'; // Importujemy nowy komponent
@@ -76,6 +77,17 @@ export default function PropertyList() {
                         {properties.map((property) => (
                             <TableRow key={property.id} hover>
                                 <TableCell component="th" scope="row">{property.title}</TableCell>
+                                <TableCell align="center">
+                                    {property.interestedLeadsCount > 0 ? (
+                                        <Tooltip title={`Tę ofertę obserwuje ${property.interestedLeadsCount} potencjalnych klientów`}>
+                                            <Badge badgeContent={property.interestedLeadsCount} color="error">
+                                                <LocalFireDepartmentIcon color="warning" />
+                                            </Badge>
+                                        </Tooltip>
+                                    ) : (
+                                        <Typography variant="body2" color="text.disabled">-</Typography>
+                                    )}
+                                </TableCell>
                                 <TableCell align="right">{property.areaSquareMeters}</TableCell>
                                 <TableCell align="right">
                                     {new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(property.priceInCents / 100)}

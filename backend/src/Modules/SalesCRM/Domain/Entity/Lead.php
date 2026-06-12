@@ -30,7 +30,7 @@ class Lead
         string $phoneNumber,
         ?Uuid $interestedInPropertyId = null
     ) {
-        $this->id = id;
+        $this->id = $id;
         $this->setValidFullName($fullName);
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;

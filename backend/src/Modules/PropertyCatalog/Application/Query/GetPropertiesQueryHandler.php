@@ -23,7 +23,7 @@ final readonly class GetPropertiesQueryHandler
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $qb->select('id', 'title', 'price_amount_in_cents', 'area_square_meters')
+        $qb->select('id', 'title', 'price_amount_in_cents', 'area_square_meters', 'interested_leads_count')
             ->from('properties')
             ->orderBy('title', 'ASC');
 
@@ -34,7 +34,8 @@ final readonly class GetPropertiesQueryHandler
             $row['id'],
             $row['title'],
             $row['price_amount_in_cents'],
-            (float) $row['area_square_meters']
+            (float) $row['area_square_meters'],
+            (int) $row['interested_leads_count'],
         ), $result);
     }
 }

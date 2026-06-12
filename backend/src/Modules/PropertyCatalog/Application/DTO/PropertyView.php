@@ -10,7 +10,8 @@ final readonly class PropertyView
         public string $id,
         public string $title,
         public int $priceInCents,
-        public float $areaSquareMeters
+        public float $areaSquareMeters,
+        public int $interestedLeadsCount = 0 // Dodane pole
     ) {
     }
 }

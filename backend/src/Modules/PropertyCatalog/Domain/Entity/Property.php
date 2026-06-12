@@ -15,6 +15,7 @@ class Property
     private string $title;
     private PropertyPrice $price;
     private PropertyArea $area;
+    private int $interestedLeadsCount;
 
     public function __construct(
         Uuid $id,
@@ -26,6 +27,7 @@ class Property
         $this->setValidTitle($title);
         $this->price = $price;
         $this->area = $area;
+        $this->interestedLeadsCount = 0; // Domyślna wartość
     }
 
     private function setValidTitle(string $title): void
@@ -39,6 +41,11 @@ class Property
         }
 
         $this->title = $trimmedTitle;
+    }
+
+    public function incrementInterestedLeads(): void
+    {
+        $this->interestedLeadsCount++;
     }
 
     // Tutaj znajdą się gettery (jeśli są potrzebne) oraz metody zmieniające stan
