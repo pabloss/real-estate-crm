@@ -2,12 +2,14 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    Paper, Typography, CircularProgress, Box, Alert, Button, Badge, Tooltip
+    Paper, Typography, CircularProgress, Box, Alert, Button, Badge, Tooltip, IconButton
 } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'; // NOWA IKONA
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import AddPropertyDialog from './AddPropertyDialog'; // Importujemy nowy komponent
+import UploadPhotoDialog from './UploadPhotoDialog'; // NASZ NOWY KOMPONENT
 
 export default function PropertyList() {
     const [properties, setProperties] = useState([]);
@@ -16,6 +18,9 @@ export default function PropertyList() {
 
     // Stan dla widoczności formularza
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    // Nowy stan przechowujący Nieruchomość, dla której wgrywamy zdjęcie:
+    const [uploadingForProperty, setUploadingForProperty] = useState(null);
 
     // Zamykamy pobieranie danych w useCallback, by móc wywołać to ponownie po dodaniu
     const fetchProperties = useCallback(() => {
@@ -36,6 +41,44 @@ export default function PropertyList() {
     useEffect(() => {
         fetchProperties();
     }, [fetchProperties]);
+
+    // ===== DODAJEMY NASŁUCHIWANIE MERCURE =====
+    useEffect(() => {
+        // Budujemy URL huba Mercure z określeniem tematu (Topic), który nas interesuje
+        // Używamy relatywnego adresu względem naszej aplikacji React
+        const hubUrl = new URL(
+            '/.well-known/mercure',
+            window.location.origin // Pobierze np. http://localhost:5173
+        );
+        hubUrl.searchParams.append('topic', 'http://crm.local/properties/photo-updated');
+
+        // Inicjalizacja strumienia Server-Sent Events
+        const eventSource = new EventSource(hubUrl);
+
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log('Otrzymano event Mercure: ', data);
+
+            // Aktualizujemy stan konkretnej nieruchomości w locie, bez ponownego pobierania całej listy z API!
+            setProperties((prevProperties) =>
+                prevProperties.map((prop) =>
+                    prop.id === data.propertyId
+                        ? { ...prop, mainPhotoUrl: data.photoUrl }
+                        : prop
+                )
+            );
+        };
+
+        eventSource.onerror = (error) => {
+            console.error('Błąd połączenia Mercure', error);
+        };
+
+        // Pamiętamy o zamknięciu połączenia po odmontowaniu komponentu!
+        return () => {
+            eventSource.close();
+        };
+    }, []);
+    // ==========================================
 
     if (loading && properties.length === 0) {
         return (
@@ -77,6 +120,14 @@ export default function PropertyList() {
                         {properties.map((property) => (
                             <TableRow key={property.id} hover>
                                 <TableCell component="th" scope="row">{property.title}</TableCell>
+                                <TableCell>
+                                    {property.mainPhotoUrl ? (
+                                        <img src={`http://localhost:8080${property.mainPhotoUrl}`} alt="Miniatura"
+                                             width="60" style={{borderRadius: '4px'}}/>
+                                    ) : (
+                                        <Typography variant="caption" color="textSecondary">Brak zdjęcia</Typography>
+                                    )}
+                                </TableCell>
                                 <TableCell align="center">
                                     {property.interestedLeadsCount > 0 ? (
                                         <Tooltip title={`Tę ofertę obserwuje ${property.interestedLeadsCount} potencjalnych klientów`}>
@@ -91,6 +142,18 @@ export default function PropertyList() {
                                 <TableCell align="right">{property.areaSquareMeters}</TableCell>
                                 <TableCell align="right">
                                     {new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(property.priceInCents / 100)}
+                                </TableCell>
+
+                                {/* Kolumna 6: Akcje (Aparat) */}
+                                <TableCell align="right">
+                                    <Tooltip title="Wgraj zdjęcie">
+                                        <IconButton
+                                            color="primary"
+                                            onClick={() => setUploadingForProperty(property)}
+                                        >
+                                            <PhotoCameraIcon />
+                                        </IconButton>
+                                    </Tooltip>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -112,6 +175,12 @@ export default function PropertyList() {
                 open={isDialogOpen}
                 onClose={() => setIsDialogOpen(false)}
                 onPropertyAdded={fetchProperties}
+            />
+            {/* Modal Wgrywania Zdjęć */}
+            <UploadPhotoDialog
+                open={Boolean(uploadingForProperty)}
+                property={uploadingForProperty}
+                onClose={() => setUploadingForProperty(null)}
             />
         </Box>
     );
