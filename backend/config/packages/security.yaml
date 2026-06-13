@@ -1,0 +1,33 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Modules\IdentityAccess\Domain\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # Jeden wspólny firewall dla całej przestrzeni /api
+        api:
+            pattern: ^/api
+            stateless: true
+            jwt: ~ # Obsługa tokenów dla chronionych ścieżek
+            json_login:
+                check_path: /api/login_check
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+    access_control:
+        # Zezwalamy na publiczny dostęp do sprawdzania loginu (tutaj generujemy token)
+        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+
+        # Każda inna ścieżka zaczynająca się od /api wymaga pełnego uwierzytelnienia JWT
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
