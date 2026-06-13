@@ -113,5 +113,3 @@ export default function App() {
         </ThemeProvider>
     );
 }
-
-export default App;
