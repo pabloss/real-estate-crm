@@ -73,7 +73,8 @@ final class PropertyController extends AbstractController
 
         // Zapis do ukrytego, tymczasowego folderu (nie dostępnego z przeglądarki)
         $tmpDir = $this->getParameter('kernel.project_dir') . '/var/uploads/tmp';
-        $tmpFilename = uniqid('tmp_img_') . '.' . $file->guessExtension();
+        $extension = $file->guessExtension();
+        $tmpFilename = uniqid('tmp_img_', true) . '.' . $extension;
         $file->move($tmpDir, $tmpFilename);
         $tmpFilePath = $tmpDir . '/' . $tmpFilename;
 
@@ -81,7 +82,7 @@ final class PropertyController extends AbstractController
         $this->commandBus->dispatch(new ProcessPropertyImageCommand(
             $id,
             $tmpFilePath,
-            $file->guessExtension()
+            $extension
         ));
 
         // Natychmiastowa odpowiedź dla frontendu, mimo że plik dopiero będzie przetwarzany
