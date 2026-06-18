@@ -25,3 +25,9 @@ services:
     App\Modules\PropertyCatalog\Infrastructure\Service\ImageProcessor:
         arguments:
             $projectDir: '%kernel.project_dir%'
+
+    App\Modules\PropertyCatalog\Domain\Repository\PropertyRepositoryInterface:
+        alias: App\Modules\PropertyCatalog\Infrastructure\Persistence\DoctrinePropertyRepository
+
+    App\Modules\SalesCRM\Domain\Repository\LeadRepositoryInterface:
+        alias: App\Modules\SalesCRM\Infrastructure\Persistence\DoctrineLeadRepository
