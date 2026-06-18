@@ -12,7 +12,7 @@ final readonly class PropertyView
         public int $priceInCents,
         public float $areaSquareMeters,
         public int $interestedLeadsCount = 0, // Dodane pole
-        public ?string $mainPhotoUrl,
+        public ?string $mainPhotoUrl = null,
     ) {
     }
 }

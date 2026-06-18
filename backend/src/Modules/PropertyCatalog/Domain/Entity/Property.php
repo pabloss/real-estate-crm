@@ -45,6 +45,16 @@ class Property
         $this->title = $trimmedTitle;
     }
 
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function getInterestedLeadsCount(): int
+    {
+        return $this->interestedLeadsCount;
+    }
+
     public function incrementInterestedLeads(): void
     {
         $this->interestedLeadsCount++;

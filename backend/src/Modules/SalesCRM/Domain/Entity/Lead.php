@@ -54,6 +54,11 @@ class Lead
         $this->fullName = $trimmed;
     }
 
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
     // Metody mutujące stan
     public function markAsContacted(): void
     {
