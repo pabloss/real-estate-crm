@@ -71,7 +71,7 @@ final class PropertyController extends AbstractController
             return new JsonResponse(['error' => 'Nieprawidłowy format pliku'], Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
         }
 
-        // Zapis do ukrytego, tymczasowego folderu (nie dostępnego z przeglądarki)
+        // Zapis do ukrytego, tymczasowego folderu (niedostępnego z przeglądarki)
         $tmpDir = $this->getParameter('kernel.project_dir') . '/var/uploads/tmp';
         $extension = $file->guessExtension();
         $tmpFilename = uniqid('tmp_img_', true) . '.' . $extension;
