@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider, createTheme, Box, Tabs, Tab, AppBar, Button
 import axios from 'axios';
 import PropertyList from './components/PropertyList';
 import LeadList from './components/LeadList';
+import Dashboard from './components/Dashboard';
 
 const theme = createTheme({
     palette: { mode: 'light', primary: { main: '#1976d2' }, background: { default: '#f5f5f5' } },
@@ -99,6 +100,7 @@ export default function App() {
                     <Tabs value={currentTab} onChange={(e, val) => setCurrentTab(val)}>
                         <Tab label="Katalog Nieruchomości" />
                         <Tab label="Klienci (Leady)" />
+                        <Tab label="Dashboard" />
                     </Tabs>
                     <Button variant="outlined" color="error" size="small" onClick={handleLogout}>
                         Wyloguj
@@ -109,6 +111,7 @@ export default function App() {
             <Box sx={{ mt: 2 }}>
                 {currentTab === 0 && <PropertyList />}
                 {currentTab === 1 && <LeadList />}
+                {currentTab === 2 && <Dashboard />}
             </Box>
         </ThemeProvider>
     );
