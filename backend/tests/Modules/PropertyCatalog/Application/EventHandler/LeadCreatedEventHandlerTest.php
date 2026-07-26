@@ -15,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class LeadCreatedEventHandlerTest extends TestCase
 {
-    public function test_it_increments_interested_leads_count_when_property_exists(): void
+    public function testItIncrementsInterestedLeadsCountWhenPropertyExists(): void
     {
         // Arrange
         $propertyId = Uuid::v4();
@@ -48,7 +48,7 @@ final class LeadCreatedEventHandlerTest extends TestCase
         $this->assertEquals(1, $property->getInterestedLeadsCount());
     }
 
-    public function test_it_ignores_event_if_lead_is_not_interested_in_specific_property(): void
+    public function testItIgnoresEventIfLeadIsNotInterestedInSpecificProperty(): void
     {
         // Arrange
         $event = new LeadCreated((string) Uuid::v4(), null, new \DateTimeImmutable());

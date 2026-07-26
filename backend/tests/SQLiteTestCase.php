@@ -36,7 +36,7 @@ abstract class SQLiteTestCase extends KernelTestCase
     {
         parent::tearDown();
 
-        if ($this->entityManager !== null) {
+        if (null !== $this->entityManager) {
             $this->entityManager->close();
             $this->entityManager = null;
         }

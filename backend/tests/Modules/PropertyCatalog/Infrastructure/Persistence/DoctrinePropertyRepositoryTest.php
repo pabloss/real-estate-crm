@@ -25,7 +25,7 @@ final class DoctrinePropertyRepositoryTest extends SQLiteTestCase
         );
     }
 
-    public function test_it_saves_and_retrieves_property_from_sqlite_database(): void
+    public function testItSavesAndRetrievesPropertyFromSqliteDatabase(): void
     {
         // Arrange
         $propertyId = Uuid::v4();
@@ -50,7 +50,7 @@ final class DoctrinePropertyRepositoryTest extends SQLiteTestCase
         $this->assertEquals(0, $retrievedProperty->getInterestedLeadsCount());
     }
 
-    public function test_it_throws_exception_when_property_not_found(): void
+    public function testItThrowsExceptionWhenPropertyNotFound(): void
     {
         // Expect
         $this->expectException(PropertyNotFoundException::class);

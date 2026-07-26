@@ -8,13 +8,12 @@ use App\Modules\SalesCRM\Domain\Entity\Lead;
 use App\Modules\SalesCRM\Domain\Event\LeadCreated;
 use App\Modules\SalesCRM\Domain\ValueObject\Email;
 use App\Shared\Domain\Exception\InvalidDomainArgumentException;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 final class LeadTest extends TestCase
 {
-    public function test_it_creates_lead_and_records_domain_event(): void
+    public function testItCreatesLeadAndRecordsDomainEvent(): void
     {
         // Arrange
         $id = Uuid::v4();
@@ -34,7 +33,7 @@ final class LeadTest extends TestCase
         $this->assertEquals($propertyId->toRfc4122(), $event->interestedInPropertyId);
     }
 
-    public function test_it_throws_exception_on_invalid_email(): void
+    public function testItThrowsExceptionOnInvalidEmail(): void
     {
         // Assert
         $this->expectException(InvalidDomainArgumentException::class);
@@ -44,10 +43,10 @@ final class LeadTest extends TestCase
         new Email('to-nie-jest-email');
     }
 
-    public function test_it_throws_exception_on_too_short_name(): void
+    public function testItThrowsExceptionOnTooShortName(): void
     {
         // Assert
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         // Act
         new Lead(Uuid::v4(), 'Ja', new Email('test@crm.local'), '123456789');
