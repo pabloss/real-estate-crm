@@ -11,7 +11,7 @@ final readonly class LeadCreated implements DomainEventInterface
     public function __construct(
         public string $leadId,
         public ?string $interestedInPropertyId,
-        public \DateTimeImmutable $occurredOn
+        public \DateTimeImmutable $occurredOn,
     ) {
     }
 }

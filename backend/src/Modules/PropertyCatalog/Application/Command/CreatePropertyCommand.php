@@ -10,7 +10,7 @@ final readonly class CreatePropertyCommand
         public string $title,
         public int $price,
         public float $area,
-        public string $type
+        public string $type,
     ) {
     }
 }

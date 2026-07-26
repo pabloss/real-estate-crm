@@ -9,7 +9,7 @@ use App\Shared\Domain\Exception\InvalidDomainArgumentException;
 final readonly class PropertyArea
 {
     public function __construct(
-        public float $squareMeters
+        public float $squareMeters,
     ) {
         if ($this->squareMeters <= 0.0) {
             throw InvalidDomainArgumentException::withMessage('Powierzchnia nieruchomości musi być większa od zera.');

@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace App\Modules\SalesCRM\Application\Query;
 
 use App\Modules\SalesCRM\Application\DTO\LeadView;
-use App\Modules\SalesCRM\Domain\Entity\Lead;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler(bus: 'query.bus')] // Ważne: przypisujemy do szyny zapytań
-
 final readonly class GetLeadsQueryHandler
 {
     public function __construct(
-        private Connection $connection
-    )
-    {
+        private Connection $connection,
+    ) {
     }
 
     public function __invoke(GetLeadsQuery $query): array

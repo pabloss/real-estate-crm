@@ -21,7 +21,7 @@ final class LeadController extends AbstractController
 
     public function __construct(
         private readonly MessageBusInterface $commandBus,
-        MessageBusInterface $queryBus
+        MessageBusInterface $queryBus,
     ) {
         $this->messageBus = $queryBus;
     }
@@ -31,6 +31,7 @@ final class LeadController extends AbstractController
     {
         // Tutaj wywołujemy zapytanie DBAL, które zwraca tablicę DTO LeadView
         $leads = $this->handle(new GetLeadsQuery());
+
         return $this->json($leads);
     }
 

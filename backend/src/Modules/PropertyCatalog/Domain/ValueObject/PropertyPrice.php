@@ -9,7 +9,7 @@ use App\Shared\Domain\Exception\InvalidDomainArgumentException;
 final readonly class PropertyPrice
 {
     public function __construct(
-        public int $amountInCents
+        public int $amountInCents,
     ) {
         if ($this->amountInCents < 0) {
             throw InvalidDomainArgumentException::withMessage('Cena nieruchomości nie może być ujemna.');

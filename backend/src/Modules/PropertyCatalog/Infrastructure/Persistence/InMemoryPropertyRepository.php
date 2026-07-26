@@ -25,10 +25,15 @@ final class InMemoryPropertyRepository implements PropertyRepositoryInterface
     {
         $property = $this->properties[$id->toRfc4122()] ?? null;
 
-        if ($property === null) {
+        if (null === $property) {
             throw PropertyNotFoundException::withMessage(sprintf('Property with ID %s not found', $id->toRfc4122()));
         }
 
         return $property;
+    }
+
+    public function countAll(): int
+    {
+        return count($this->properties);
     }
 }

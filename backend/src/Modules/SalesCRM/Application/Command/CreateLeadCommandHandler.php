@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Modules\SalesCRM\Application\Command;
 
 use App\Modules\SalesCRM\Domain\Entity\Lead;
-use App\Modules\SalesCRM\Domain\ValueObject\Email;
 use App\Modules\SalesCRM\Domain\Repository\LeadRepositoryInterface;
+use App\Modules\SalesCRM\Domain\ValueObject\Email;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
@@ -16,7 +16,7 @@ final readonly class CreateLeadCommandHandler
 {
     public function __construct(
         private LeadRepositoryInterface $repository,
-        private MessageBusInterface $eventBus // Wstrzykujemy nową szynę
+        private MessageBusInterface $eventBus, // Wstrzykujemy nową szynę
     ) {
     }
 

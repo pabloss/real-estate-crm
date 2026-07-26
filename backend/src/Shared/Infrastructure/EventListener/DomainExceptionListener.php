@@ -38,7 +38,7 @@ final class DomainExceptionListener
                 'error' => [
                     'type' => 'DomainValidationError',
                     'message' => $exception->getMessage(),
-                ]
+                ],
             ],
             Response::HTTP_BAD_REQUEST // Kod 400 - winny jest użytkownik, a nie serwer
         );

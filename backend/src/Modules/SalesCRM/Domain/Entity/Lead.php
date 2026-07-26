@@ -8,7 +8,6 @@ use App\Modules\SalesCRM\Domain\Enum\LeadStatus;
 use App\Modules\SalesCRM\Domain\Event\LeadCreated;
 use App\Modules\SalesCRM\Domain\ValueObject\Email;
 use App\Shared\Domain\Aggregate\AggregateRootTrait;
-use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 class Lead
@@ -28,7 +27,7 @@ class Lead
         string $fullName,
         Email $email,
         string $phoneNumber,
-        ?Uuid $interestedInPropertyId = null
+        ?Uuid $interestedInPropertyId = null,
     ) {
         $this->id = $id;
         $this->setValidFullName($fullName);
@@ -49,7 +48,7 @@ class Lead
     {
         $trimmed = trim($fullName);
         if (mb_strlen($trimmed) < 3) {
-            throw new InvalidArgumentException('Imię i nazwisko musi mieć min. 3 znaki.');
+            throw new \InvalidArgumentException('Imię i nazwisko musi mieć min. 3 znaki.');
         }
         $this->fullName = $trimmed;
     }
@@ -63,5 +62,10 @@ class Lead
     public function markAsContacted(): void
     {
         $this->status = LeadStatus::CONTACTED;
+    }
+
+    public function getStatus(): LeadStatus
+    {
+        return $this->status;
     }
 }

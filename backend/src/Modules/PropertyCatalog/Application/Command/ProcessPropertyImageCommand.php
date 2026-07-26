@@ -9,7 +9,7 @@ final readonly class ProcessPropertyImageCommand
     public function __construct(
         public string $propertyId,
         public string $tmpFilePath,
-        public string $originalExtension
+        public string $originalExtension,
     ) {
     }
 }

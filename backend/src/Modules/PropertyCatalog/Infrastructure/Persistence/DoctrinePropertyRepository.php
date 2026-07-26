@@ -34,4 +34,12 @@ final class DoctrinePropertyRepository extends ServiceEntityRepository implement
 
         return $property;
     }
+
+    public function countAll(): int
+    {
+        return (int) $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

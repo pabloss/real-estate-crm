@@ -16,4 +16,8 @@ interface LeadRepositoryInterface
      * @throws PropertyNotFoundException
      */
     public function getById(Uuid $id): Lead;
+
+    public function countAll(): int;
+
+    public function countByStatus(): array;
 }

@@ -16,4 +16,6 @@ interface PropertyRepositoryInterface
      * @throws PropertyNotFoundException
      */
     public function getById(Uuid $id): Property;
+
+    public function countAll(): int;
 }

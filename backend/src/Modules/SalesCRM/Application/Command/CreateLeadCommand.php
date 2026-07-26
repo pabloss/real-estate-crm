@@ -10,7 +10,7 @@ final readonly class CreateLeadCommand
         public string $fullName,
         public string $email,
         public string $phoneNumber,
-        public ?string $interestedInPropertyId = null
+        public ?string $interestedInPropertyId = null,
     ) {
     }
 }

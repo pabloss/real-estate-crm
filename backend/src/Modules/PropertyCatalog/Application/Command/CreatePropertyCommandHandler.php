@@ -15,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
 final readonly class CreatePropertyCommandHandler
 {
     public function __construct(
-        private PropertyRepositoryInterface $repository
+        private PropertyRepositoryInterface $repository,
     ) {
     }
 

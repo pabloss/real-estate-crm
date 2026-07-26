@@ -23,7 +23,7 @@ final class PropertyController extends AbstractController
 
     public function __construct(
         private readonly MessageBusInterface $commandBus,
-        MessageBusInterface $queryBus // Wstrzykujemy szynę zapytań dla HandleTrait
+        MessageBusInterface $queryBus, // Wstrzykujemy szynę zapytań dla HandleTrait
     ) {
         $this->messageBus = $queryBus; // Inicjalizacja dla HandleTrait
     }
@@ -72,11 +72,11 @@ final class PropertyController extends AbstractController
         }
 
         // Zapis do ukrytego, tymczasowego folderu (niedostępnego z przeglądarki)
-        $tmpDir = $this->getParameter('kernel.project_dir') . '/var/uploads/tmp';
+        $tmpDir = $this->getParameter('kernel.project_dir').'/var/uploads/tmp';
         $extension = $file->guessExtension();
-        $tmpFilename = uniqid('tmp_img_', true) . '.' . $extension;
+        $tmpFilename = uniqid('tmp_img_', true).'.'.$extension;
         $file->move($tmpDir, $tmpFilename);
-        $tmpFilePath = $tmpDir . '/' . $tmpFilename;
+        $tmpFilePath = $tmpDir.'/'.$tmpFilename;
 
         // Wrzucamy komendę do tła
         $this->commandBus->dispatch(new ProcessPropertyImageCommand(

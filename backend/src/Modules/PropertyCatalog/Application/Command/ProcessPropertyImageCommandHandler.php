@@ -17,7 +17,7 @@ final readonly class ProcessPropertyImageCommandHandler
     public function __construct(
         private PropertyRepositoryInterface $repository,
         private ImageProcessor $imageProcessor,
-        private HubInterface $mercureHub // Wstrzykujemy Hub Mercure
+        private HubInterface $mercureHub, // Wstrzykujemy Hub Mercure
     ) {
     }
 
@@ -44,7 +44,7 @@ final readonly class ProcessPropertyImageCommandHandler
         // 1. Definiujemy Payload (dane dla frontendu w formacie JSON)
         $payload = json_encode([
             'propertyId' => $propertyId->toRfc4122(),
-            'photoUrl' => $publicPath
+            'photoUrl' => $publicPath,
         ], JSON_THROW_ON_ERROR);
 
         // 2. Tworzymy obiekt Update dla konkretnego tematu (Topic)

@@ -6,7 +6,6 @@ namespace App\Modules\PropertyCatalog\Domain\Entity;
 
 use App\Modules\PropertyCatalog\Domain\ValueObject\PropertyArea;
 use App\Modules\PropertyCatalog\Domain\ValueObject\PropertyPrice;
-use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 class Property
@@ -23,7 +22,7 @@ class Property
         Uuid $id,
         string $title,
         PropertyPrice $price,
-        PropertyArea $area
+        PropertyArea $area,
     ) {
         $this->id = $id;
         $this->setValidTitle($title);
@@ -35,11 +34,11 @@ class Property
     private function setValidTitle(string $title): void
     {
         $trimmedTitle = trim($title);
-        if ($trimmedTitle === '') {
-            throw new InvalidArgumentException('Tytuł nieruchomości nie może być pusty.');
+        if ('' === $trimmedTitle) {
+            throw new \InvalidArgumentException('Tytuł nieruchomości nie może być pusty.');
         }
         if (mb_strlen($trimmedTitle) < 5) {
-            throw new InvalidArgumentException('Tytuł nieruchomości musi mieć minimum 5 znaków.');
+            throw new \InvalidArgumentException('Tytuł nieruchomości musi mieć minimum 5 znaków.');
         }
 
         $this->title = $trimmedTitle;
@@ -57,7 +56,7 @@ class Property
 
     public function incrementInterestedLeads(): void
     {
-        $this->interestedLeadsCount++;
+        ++$this->interestedLeadsCount;
     }
 
     public function setMainPhotoUrl(string $mainPhotoUrl): void
